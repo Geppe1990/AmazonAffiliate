@@ -2,18 +2,18 @@
 		"name": "webcomponent",
 		"version": "1.0.0",
 		"description": "",
-		"main": "my-title.js",
+		"main": "index.js",
 		"scripts": {
 				"test": "echo \"Error: no test specified\" && exit 1",
 				"build": "babel --presets es2015 ./src --out-dir ./dist"
 		},
 		"author": {
 				"name": "Giuseppe Vigneri",
-				"url": "http://www.vigneri.me"
+				"url": "https://www.vigneri.me"
 		},
 		"repository": {
 				"type": "git",
-				"url": "http://link-to-your-git-repo.com"
+				"url": "https://github.com/Geppe1990/AmazonAffiliate"
 		},
 		"license": "ISC",
 		"devDependencies": {
