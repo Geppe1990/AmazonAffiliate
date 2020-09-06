@@ -71,8 +71,7 @@ var header = require('gulp-header');
 var package = require('./package.json');
 
 // Scripts
-var jshint = require('gulp-jshint');
-var stylish = require('jshint-stylish');
+var eslint = require('gulp-eslint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-terser');
 var optimizejs = require('gulp-optimize-js');
@@ -175,9 +174,9 @@ var lintScripts = function (done) {
 
 	// Lint scripts
 	return src(paths.scripts.input)
-		.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish'));
-
+		.pipe(eslint())
+		.pipe(eslint.format())
+		.pipe(eslint.failAfterError());
 };
 
 // Process, lint, and minify Sass files
