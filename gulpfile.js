@@ -1,19 +1,16 @@
 const gulp = require("gulp");
-const del = require("del");
-const flatmap = require("gulp-flatmap");
-const lazypipe = require("lazypipe");
 const rename = require("gulp-rename");
 const header = require("gulp-header");
 const packageJson = require("./package.json");
 
 // Scripts
 const eslint = require("gulp-eslint");
-const concat = require("gulp-concat");
-const uglify = require("gulp-terser");
+const uglifyJS = require("gulp-terser");
 const babel = require("gulp-babel");
 
 // Styles
 const sass = require("gulp-sass");
+const uglifyCSS = require("gulp-clean-css");
 
 const paths = {
 	input: "src/",
@@ -50,6 +47,9 @@ gulp.task("build-css", function() {
 			outputStyle: "expanded",
 			sourceComments: true
 		}))
+		.pipe(gulp.dest(paths.styles.output))
+		.pipe(rename({suffix: ".min"}))
+		.pipe(uglifyCSS({compatibility: "ie11"}))
 		.pipe(gulp.dest(paths.styles.output));
 });
 
@@ -65,8 +65,10 @@ gulp.task("build-js", function() {
 		.pipe(babel({
 			presets: ["@babel/env"]
 		}))
-		.pipe(uglify())
 		.pipe(header(banner.main, {package: packageJson}))
+		.pipe(gulp.dest(paths.scripts.output))
+		.pipe(rename({suffix: ".min"}))
+		.pipe(uglifyJS())
 		.pipe(gulp.dest(paths.scripts.output));
 });
 
