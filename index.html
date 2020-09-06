@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Custom Element!</title>
+
+    <script src="node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+
+<body class="">
+    <my-referral product="https://www.amazon.it/dp/B00ADG744Q"></my-referral>
+    <my-referral product="https://www.amazon.it/homcom-Schermo-Proiezione-Motorizzato-Pollici/dp/B01MZ2AVFE"></my-referral>
+
+    <script>
+        window.addEventListener('WebComponentsReady', function () {
+            var referralLink = document.createElement('script');
+            referralLink.src = 'dist/index.js';
+            document.head.appendChild(referralLink);
+        });
+    </script>
+</body>
+
+</html>
