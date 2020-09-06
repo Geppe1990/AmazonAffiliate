@@ -1,5 +1,5 @@
 (function () {
-	const template = document.createElement('template');
+	const template = document.createElement("template");
 
 	template.innerHTML = `
 		<style>
@@ -81,20 +81,20 @@
 			this.increment = this.increment.bind(this);
 			this.decrement = this.decrement.bind(this);
 
-			this.attachShadow({ mode: 'open' });
+			this.attachShadow({ mode: "open" });
 			this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-			this.incrementBtn = this.shadowRoot.querySelector('[increment]');
-			this.decrementBtn = this.shadowRoot.querySelector('[decrement]');
-			this.displayVal = this.shadowRoot.querySelector('span');
+			this.incrementBtn = this.shadowRoot.querySelector("[increment]");
+			this.decrementBtn = this.shadowRoot.querySelector("[decrement]");
+			this.displayVal = this.shadowRoot.querySelector("span");
 		}
 
 		connectedCallback() {
-			this.incrementBtn.addEventListener('click', this.increment);
-			this.decrementBtn.addEventListener('click', this.decrement);
+			this.incrementBtn.addEventListener("click", this.increment);
+			this.decrementBtn.addEventListener("click", this.decrement);
 
-			if(!this.hasAttribute('value')) {
-				this.setAttribute('value', 1);
+			if(!this.hasAttribute("value")) {
+				this.setAttribute("value", 1);
 			}
 		}
 
@@ -121,51 +121,52 @@
 		}
 
 		static get observedAttributes() {
-			return ['value'];
+			return ["value"];
 		}
 
+		// eslint-disable-next-line no-unused-vars
 		attributeChangedCallback(name, oldValue, newValue) {
 			this.displayVal.innerText = this.value;
 		}
 
 		get value() {
-			return this.getAttribute('value');
+			return this.getAttribute("value");
 		}
 
 		get step() {
-			return this.getAttribute('step');
+			return this.getAttribute("step");
 		}
 
 		get min() {
-			return this.getAttribute('min');
+			return this.getAttribute("min");
 		}
 		
 		get max() {
-			return this.getAttribute('max');
+			return this.getAttribute("max");
 		}
 
 		set value(newValue) {
-			this.setAttribute('value', newValue);
+			this.setAttribute("value", newValue);
 		}
 
 		set step(newValue) {
-			this.setAttribute('step', newValue);
+			this.setAttribute("step", newValue);
 		}
 		
 		set min(newValue) {
-			this.setAttribute('min', newValue);
+			this.setAttribute("min", newValue);
 
 		}
 		
 		set max(newValue) {
-			this.setAttribute('max', newValue);
+			this.setAttribute("max", newValue);
 		}
 
 		disconnectedCallback() {
-			this.incrementBtn.removeEventListener('click', this.increment);
-			this.decrementBtn.removeEventListener('click', this.decrement);
+			this.incrementBtn.removeEventListener("click", this.increment);
+			this.decrementBtn.removeEventListener("click", this.decrement);
 		}
 	}
 
-	window.customElements.define('my-counter', MyCounter);
+	window.customElements.define("my-counter", MyCounter);
 })();
