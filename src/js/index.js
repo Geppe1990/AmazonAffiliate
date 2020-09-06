@@ -1,14 +1,16 @@
+import * as config from "../../config.json";
+
 class MyReferral extends HTMLElement {
 	constructor() {
 		super();
 		
 		const template = document.createElement("template");	
 		template.innerHTML = `
-			<style>
-			</style>
+			<style></style>
 			<a href="">Questo è il link</a>
 		`;
 
+		this.testt = config.amazonTag;
 		this.attachShadow({ mode: "open" });
 		this.shadowRoot.appendChild(template.content.cloneNode(true));
 
@@ -17,9 +19,12 @@ class MyReferral extends HTMLElement {
 	}
 
 	init() {
+		console.log(this.testt);
 		//TODO: Recuperare amazontag da config.json
 		// const config = require("../../config.json");
-		const amazonTag = "pippo";
+		const config = "pippo";
+		console.log(config);
+		const amazonTag = config.amazonTag;
 
 		const url = this.attributes.product.value;
 		const referral = `?ref=${amazonTag}`;
