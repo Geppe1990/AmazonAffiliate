@@ -19,26 +19,26 @@ var settings = {
  */
 
 var paths = {
-	input: 'src/',
-	output: 'dist/',
+	input: "src/",
+	output: "dist/",
 	scripts: {
-		input: 'src/js/*',
-		polyfills: '.polyfill.js',
-		output: 'dist/js/'
+		input: "src/js/*",
+		polyfills: ".polyfill.js",
+		output: "dist/js/"
 	},
 	styles: {
-		input: 'src/sass/**/*.{scss,sass}',
-		output: 'dist/css/'
+		input: "src/sass/**/*.{scss,sass}",
+		output: "dist/css/"
 	},
 	svgs: {
-		input: 'src/svg/*.svg',
-		output: 'dist/svg/'
+		input: "src/svg/*.svg",
+		output: "dist/svg/"
 	},
 	copy: {
-		input: 'src/copy/**/*',
-		output: 'dist/'
+		input: "src/copy/**/*",
+		output: "dist/"
 	},
-	reload: './dist/'
+	reload: "./dist/"
 };
 
 
@@ -48,12 +48,12 @@ var paths = {
 
 var banner = {
 	main:
-		'/*!' +
-		' <%= package.name %> v<%= package.version %>' +
-		' | (c) ' + new Date().getFullYear() + ' <%= package.author.name %>' +
-		' | <%= package.license %> License' +
-		' | <%= package.repository.url %>' +
-		' */\n'
+		"/*!" +
+		" <%= package.name %> v<%= package.version %>" +
+		" | (c) " + new Date().getFullYear() + " <%= package.author.name %>" +
+		" | <%= package.license %> License" +
+		" | <%= package.repository.url %>" +
+		" */\n"
 };
 
 
@@ -62,31 +62,31 @@ var banner = {
  */
 
 // General
-var {gulp, src, dest, watch, series, parallel} = require('gulp');
-var del = require('del');
-var flatmap = require('gulp-flatmap');
-var lazypipe = require('lazypipe');
-var rename = require('gulp-rename');
-var header = require('gulp-header');
-var package = require('./package.json');
+var {src, dest, watch, series, parallel} = require("gulp");
+var del = require("del");
+var flatmap = require("gulp-flatmap");
+var lazypipe = require("lazypipe");
+var rename = require("gulp-rename");
+var header = require("gulp-header");
+var packageJson = require("./package.json");
 
 // Scripts
-var eslint = require('gulp-eslint');
-var concat = require('gulp-concat');
-var uglify = require('gulp-terser');
-var optimizejs = require('gulp-optimize-js');
+var eslint = require("gulp-eslint");
+var concat = require("gulp-concat");
+var uglify = require("gulp-terser");
+var optimizejs = require("gulp-optimize-js");
 
 // Styles
-var sass = require('gulp-sass');
-var postcss = require('gulp-postcss');
-var prefix = require('autoprefixer');
-var minify = require('cssnano');
+var sass = require("gulp-sass");
+var postcss = require("gulp-postcss");
+var prefix = require("autoprefixer");
+var minify = require("cssnano");
 
 // SVGs
-var svgmin = require('gulp-svgmin');
+var svgmin = require("gulp-svgmin");
 
 // BrowserSync
-var browserSync = require('browser-sync');
+var browserSync = require("browser-sync");
 
 
 /**
@@ -111,13 +111,13 @@ var cleanDist = function (done) {
 
 // Repeated JavaScript tasks
 var jsTasks = lazypipe()
-	.pipe(header, banner.main, {package: package})
+	.pipe(header, banner.main, {package: packageJson})
 	.pipe(optimizejs)
 	.pipe(dest, paths.scripts.output)
-	.pipe(rename, {suffix: '.min'})
+	.pipe(rename, {suffix: ".min"})
 	.pipe(uglify)
 	.pipe(optimizejs)
-	.pipe(header, banner.main, {package: package})
+	.pipe(header, banner.main, {package: packageJson})
 	.pipe(dest, paths.scripts.output);
 
 // Lint, minify, and concatenate scripts
@@ -134,25 +134,25 @@ var buildScripts = function (done) {
 			if (file.isDirectory()) {
 
 				// Setup a suffix variable
-				var suffix = '';
+				var suffix = "";
 
 				// If separate polyfill files enabled
 				if (settings.polyfills) {
 
 					// Update the suffix
-					suffix = '.polyfills';
+					suffix = ".polyfills";
 
-					// Grab files that aren't polyfills, concatenate them, and process them
-					src([file.path + '/*.js', '!' + file.path + '/*' + paths.scripts.polyfills])
-						.pipe(concat(file.relative + '.js'))
+					// Grab files that aren"t polyfills, concatenate them, and process them
+					src([file.path + "/*.js", "!" + file.path + "/*" + paths.scripts.polyfills])
+						.pipe(concat(file.relative + ".js"))
 						.pipe(jsTasks());
 
 				}
 
 				// Grab all files and concatenate them
 				// If separate polyfills enabled, this will have .polyfills in the filename
-				src(file.path + '/*.js')
-					.pipe(concat(file.relative + suffix + '.js'))
+				src(file.path + "/*.js")
+					.pipe(concat(file.relative + suffix + ".js"))
 					.pipe(jsTasks());
 
 				return stream;
@@ -188,7 +188,7 @@ var buildStyles = function (done) {
 	// Run tasks on all Sass files
 	return src(paths.styles.input)
 		.pipe(sass({
-			outputStyle: 'expanded',
+			outputStyle: "expanded",
 			sourceComments: true
 		}))
 		.pipe(postcss([
@@ -197,9 +197,9 @@ var buildStyles = function (done) {
 				remove: true
 			})
 		]))
-		.pipe(header(banner.main, {package: package}))
+		.pipe(header(banner.main, {package: packageJson}))
 		.pipe(dest(paths.styles.output))
-		.pipe(rename({suffix: '.min'}))
+		.pipe(rename({suffix: ".min"}))
 		.pipe(postcss([
 			minify({
 				discardComments: {
