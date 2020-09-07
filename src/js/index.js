@@ -1,3 +1,4 @@
+import * as config from "../../config.json";
 class MyReferral extends HTMLElement {
 	constructor() {
 		super();
@@ -18,7 +19,6 @@ class MyReferral extends HTMLElement {
 	init() {
 		// const config = import("../../config.json");
 		// const config = {amazonTag: "asd"};
-		const config = "asd";
 		const amazonTag = config.amazonTag;
 		const url = this.attributes.product.value;
 		const referral = `?ref=${amazonTag}`;

@@ -13,6 +13,11 @@ const babel = require("gulp-babel");
 const sass = require("gulp-sass");
 const uglifyCSS = require("gulp-clean-css");
 
+// Webpack
+const webpack = require("webpack");
+const webpackStream = require("webpack-stream");
+const webpackConfig = require("./webpack.config.js");
+
 const paths = {
 	input: "src/",
 	output: "dist/",
@@ -36,6 +41,13 @@ const banner = {
 		" | <%= package.repository.url %>" +
 		" */\n"
 };
+
+gulp.task("js", () => {
+	let files = [paths.scripts.input];
+
+	return gulp.src(files)
+		.pipe(webpackStream(webpackConfig), webpack);
+});
 
 gulp.task("build-css", function() {
 	let files = [

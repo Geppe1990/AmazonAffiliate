@@ -1,2 +1,1 @@
-config = '[{"amazonTag" : "my-amazon-tag-20"}]';
-
+{"amazonTag" : "my-amazon-tag-20"}
