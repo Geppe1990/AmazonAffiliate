@@ -1,4 +1,2 @@
-{
-    "amazonTag": "my-amazon-tag-20"
-}
+config = '[{"amazonTag" : "my-amazon-tag-20"}]';
 
