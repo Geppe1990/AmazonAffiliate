@@ -54,15 +54,8 @@ gulp.task("build-css", function() {
 		.pipe(gulp.dest(paths.styles.output));
 });
 
-gulp.task("minify-js", function() {
-	//CREARE FUNZINOE PER MINIFY JS SINGOLA, IN MODO DA PREVENIRE L'ERRORE CON SOURCEMAPS
-	// https://stackoverflow.com/questions/52175021/gulp-uglify-rename-and-sourcemaps
-});
-
 gulp.task("build-js", function() {
-	let files = [
-		paths.scripts.input,
-	];
+	let files = [paths.scripts.input];
 
 	return gulp.src(files)
 		.pipe(sourcemaps.init({loadMaps: true}))
@@ -76,16 +69,13 @@ gulp.task("build-js", function() {
 		.pipe(babel({
 			presets: ["@babel/env"],
 		}))
+		.pipe(uglifyJS())
 		.pipe(header(banner.main, {package: packageJson}))
 		.pipe(sourcemaps.write("."))
-		.pipe(gulp.dest(paths.scripts.output))
-		.pipe(rename({suffix: ".min"}))
-		.pipe(uglifyJS())
 		.pipe(gulp.dest(paths.scripts.output));
 });
 
 gulp.task("start", gulp.series("build-css", "build-js"));
-
 gulp.task("watch", function(){
 	gulp.watch("src/sass/*.scss", gulp.series("build-css")),
 	gulp.watch("src/js/*.js", gulp.series("build-js"));
